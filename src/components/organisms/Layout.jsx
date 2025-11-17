@@ -14,8 +14,8 @@ const Layout = () => {
     { name: "Pipeline", path: "/pipeline", icon: "TrendingUp" }
   ];
 
-  return (
-    <div className="min-h-screen bg-background">
+return (
+    <div className="h-screen bg-background flex flex-col">
       <Header 
         isMobileMenuOpen={isMobileMenuOpen} 
         setIsMobileMenuOpen={setIsMobileMenuOpen} 
@@ -66,7 +66,7 @@ const Layout = () => {
         />
       )}
       
-<main className={`p-2 sm:p-3 lg:p-4 transition-all duration-300 ${
+<main className={`flex-1 transition-all duration-300 ${
         'lg:ml-64'
       }`}>
         <Outlet />
