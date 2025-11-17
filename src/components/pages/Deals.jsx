@@ -11,6 +11,7 @@ import Loading from "@/components/ui/Loading";
 import Empty from "@/components/ui/Empty";
 import ErrorView from "@/components/ui/ErrorView";
 import DealDetailModal from "@/components/organisms/DealDetailModal";
+import QuickAddModal from "@/components/organisms/QuickAddModal";
 import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
 
@@ -314,11 +315,18 @@ const [isExporting, setIsExporting] = useState(false);
       )}
 
       {/* Deal Detail Modal */}
-      <DealDetailModal
+<DealDetailModal
         isOpen={isDetailModalOpen}
         onClose={() => setIsDetailModalOpen(false)}
         deal={selectedDeal}
         onUpdate={loadDeals}
+      />
+      
+      <QuickAddModal
+        isOpen={isQuickAddOpen}
+        onClose={() => setIsQuickAddOpen(false)}
+        onSuccess={loadDeals}
+        type="deal"
       />
     </div>
   );
