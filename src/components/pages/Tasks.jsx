@@ -187,12 +187,22 @@ const Tasks = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Tasks</h1>
           <p className="text-gray-600 mt-1">
             {stats.pending} pending • {stats.overdue} overdue • {stats.dueToday} due today
           </p>
+        </div>
+        <div className="flex gap-2">
+          <Button
+            onClick={() => console.log('Add task clicked - needs modal integration')}
+            variant="primary"
+            className="flex items-center gap-2"
+          >
+            <ApperIcon name="Plus" size={16} />
+            Add Task
+          </Button>
         </div>
       </div>
 
