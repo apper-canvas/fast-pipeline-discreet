@@ -11,6 +11,7 @@ import ContactDetailModal from "@/components/organisms/ContactDetailModal";
 import ApperIcon from "@/components/ApperIcon";
 import { contactService } from "@/services/api/contactService";
 import { dealService } from "@/services/api/dealService";
+import { csvExportService } from "@/services/csvExportService";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 
@@ -25,6 +26,8 @@ const Contacts = () => {
   const [selectedContact, setSelectedContact] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
+const [isExporting, setIsExporting] = useState(false);
+
   const loadContacts = async () => {
     try {
       setError("");
@@ -36,6 +39,19 @@ const Contacts = () => {
       setError(err.message || "Failed to load contacts");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleExportContacts = async () => {
+    try {
+      setIsExporting(true);
+      await contactService.exportToCSV(filteredContacts);
+      toast.success(`Successfully exported ${filteredContacts.length} contacts to CSV`);
+    } catch (err) {
+      toast.error("Failed to export contacts");
+      console.error("Export error:", err);
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -94,13 +110,27 @@ const Contacts = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+{/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Contacts</h1>
           <p className="text-gray-600 mt-1">
             {filteredContacts.length} of {contacts.length} contacts
           </p>
+        </div>
+        
+        {/* Export Button */}
+        <div className="flex items-center gap-3">
+          <Button
+            onClick={handleExportContacts}
+            disabled={isExporting || filteredContacts.length === 0}
+            variant="outline"
+            size="sm"
+            icon={isExporting ? "Loader2" : "Download"}
+            className={isExporting ? "animate-spin" : ""}
+          >
+            {isExporting ? "Exporting..." : "Export CSV"}
+          </Button>
         </div>
       </div>
 

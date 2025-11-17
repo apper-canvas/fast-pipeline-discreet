@@ -10,6 +10,7 @@ import DealDetailModal from "@/components/organisms/DealDetailModal";
 import ApperIcon from "@/components/ApperIcon";
 import { dealService } from "@/services/api/dealService";
 import { contactService } from "@/services/api/contactService";
+import { csvExportService } from "@/services/csvExportService";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 
@@ -33,6 +34,8 @@ const Deals = () => {
     { label: "Closed Lost", value: "closed-lost" }
   ];
 
+const [isExporting, setIsExporting] = useState(false);
+
   const loadDeals = async () => {
     try {
       setError("");
@@ -48,6 +51,19 @@ const Deals = () => {
       setError(err.message || "Failed to load deals");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleExportDeals = async () => {
+    try {
+      setIsExporting(true);
+      await dealService.exportToCSV(filteredDeals, contacts);
+      toast.success(`Successfully exported ${filteredDeals.length} deals to CSV`);
+    } catch (err) {
+      toast.error("Failed to export deals");
+      console.error("Export error:", err);
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -132,12 +148,26 @@ const Deals = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Deals</h1>
           <p className="text-gray-600 mt-1">
             {filteredDeals.length} deals • {formatCurrency(totalValue)} total value
           </p>
+        </div>
+        
+        {/* Export Button */}
+        <div className="flex items-center gap-3">
+          <Button
+            onClick={handleExportDeals}
+            disabled={isExporting || filteredDeals.length === 0}
+            variant="outline"
+            size="sm"
+            icon={isExporting ? "Loader2" : "Download"}
+            className={isExporting ? "animate-spin" : ""}
+          >
+            {isExporting ? "Exporting..." : "Export CSV"}
+          </Button>
         </div>
       </div>
 

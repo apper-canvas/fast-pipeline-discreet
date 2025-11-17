@@ -1,7 +1,8 @@
-import contactsData from "@/services/mockData/contacts.json";
+import contacts from "@/services/mockData/contacts.json";
+import { csvExportService } from "@/services/csvExportService";
 
-let contacts = [...contactsData];
-
+// Contact service for managing contacts
+// This would typically connect to your backend API
 export const contactService = {
   async getAll() {
     // Simulate API delay
@@ -93,7 +94,35 @@ export const contactService = {
         filters.tags.some(tag => contact.tags.includes(tag))
       );
     }
+return filteredContacts;
+  },
+
+  /**
+   * Export contacts to CSV format
+   * @param {Array} contactsToExport - Contacts to export (optional, defaults to all)
+   * @returns {Promise<void>} Downloads CSV file
+   */
+  async exportToCSV(contactsToExport = null) {
+    await new Promise(resolve => setTimeout(resolve, 200));
     
-    return filteredContacts;
+    const dataToExport = contactsToExport || contacts;
+    
+    const headers = [
+      { key: 'Id', label: 'Contact ID' },
+      { key: 'firstName', label: 'First Name' },
+      { key: 'lastName', label: 'Last Name' },
+      { key: 'email', label: 'Email' },
+      { key: 'phone', label: 'Phone' },
+      { key: 'company', label: 'Company' },
+      { key: 'position', label: 'Position' },
+      { key: 'tags', label: 'Tags', formatter: csvExportService.formatArray },
+      { key: 'createdAt', label: 'Created Date', formatter: csvExportService.formatDate },
+      { key: 'updatedAt', label: 'Last Updated', formatter: csvExportService.formatDate }
+    ];
+
+    const csvContent = csvExportService.convertToCSV(dataToExport, headers);
+    const filename = `contacts_export_${csvExportService.getTimestamp()}.csv`;
+    
+    csvExportService.downloadCSV(csvContent, filename);
   }
 };

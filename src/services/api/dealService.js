@@ -1,7 +1,8 @@
-import dealsData from "@/services/mockData/deals.json";
+import deals from "@/services/mockData/deals.json";
+import { csvExportService } from "@/services/csvExportService";
 
-let deals = [...dealsData];
-
+// Deal service for managing deals
+// This would typically connect to your backend API
 export const dealService = {
   async getAll() {
     await new Promise(resolve => setTimeout(resolve, 300));
@@ -106,7 +107,49 @@ export const dealService = {
         stats[deal.stage].value += deal.value;
       }
     });
+return stats;
+  },
+
+  /**
+   * Export deals to CSV format
+   * @param {Array} dealsToExport - Deals to export (optional, defaults to all)
+   * @param {Array} contacts - Contacts array for lookup (optional)
+   * @returns {Promise<void>} Downloads CSV file
+   */
+  async exportToCSV(dealsToExport = null, contacts = []) {
+    await new Promise(resolve => setTimeout(resolve, 200));
     
-    return stats;
+    const dataToExport = dealsToExport || deals;
+    
+    // Helper function to get contact name
+    const getContactName = (contactId) => {
+      const contact = contacts.find(c => c.Id.toString() === contactId);
+      return contact ? `${contact.firstName} ${contact.lastName}` : 'Unknown Contact';
+    };
+
+    // Helper function to get contact company
+    const getContactCompany = (contactId) => {
+      const contact = contacts.find(c => c.Id.toString() === contactId);
+      return contact?.company || '';
+    };
+
+    const headers = [
+      { key: 'Id', label: 'Deal ID' },
+      { key: 'title', label: 'Deal Title' },
+      { key: 'contactId', label: 'Contact Name', formatter: getContactName },
+      { key: 'contactId', label: 'Contact Company', formatter: getContactCompany },
+      { key: 'value', label: 'Deal Value', formatter: csvExportService.formatCurrency },
+      { key: 'stage', label: 'Stage' },
+      { key: 'probability', label: 'Probability (%)' },
+      { key: 'expectedCloseDate', label: 'Expected Close Date', formatter: csvExportService.formatDate },
+      { key: 'notes', label: 'Notes' },
+      { key: 'createdAt', label: 'Created Date', formatter: csvExportService.formatDate },
+      { key: 'updatedAt', label: 'Last Updated', formatter: csvExportService.formatDate }
+    ];
+
+    const csvContent = csvExportService.convertToCSV(dataToExport, headers);
+    const filename = `deals_export_${csvExportService.getTimestamp()}.csv`;
+    
+    csvExportService.downloadCSV(csvContent, filename);
   }
 };
