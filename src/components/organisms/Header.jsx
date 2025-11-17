@@ -62,9 +62,9 @@ const Header = () => {
           <div className="flex items-center space-x-3">
             
             {/* Mobile menu button */}
-            <button
+<button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100"
+              className="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100"
             >
               <ApperIcon name={isMobileMenuOpen ? "X" : "Menu"} className="w-5 h-5" />
             </button>
