@@ -146,8 +146,8 @@ const [isExporting, setIsExporting] = useState(false);
   const totalValue = filteredDeals.reduce((sum, deal) => sum + deal.value, 0);
   const averageValue = filteredDeals.length > 0 ? totalValue / filteredDeals.length : 0;
 
-  return (
-    <div className="space-y-6">
+return (
+    <div className="space-y-4">
       {/* Header */}
 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>

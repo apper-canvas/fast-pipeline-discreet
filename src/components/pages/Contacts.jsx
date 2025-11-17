@@ -112,8 +112,8 @@ const handleExportContacts = async () => {
   if (loading) return <Loading />;
   if (error) return <ErrorView error={error} onRetry={loadContacts} />;
 
-  return (
-    <div className="space-y-6">
+return (
+    <div className="space-y-4">
 {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
