@@ -7,6 +7,7 @@ import Loading from "@/components/ui/Loading";
 import ErrorView from "@/components/ui/ErrorView";
 import Empty from "@/components/ui/Empty";
 import ApperIcon from "@/components/ApperIcon";
+import QuickAddModal from "@/components/organisms/QuickAddModal";
 import { taskService } from "@/services/api/taskService";
 import { contactService } from "@/services/api/contactService";
 import { dealService } from "@/services/api/dealService";
@@ -23,7 +24,7 @@ const Tasks = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState([]);
   const [priorityFilter, setPriorityFilter] = useState([]);
-
+const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
   const statusOptions = [
     { label: "All", value: "all" },
     { label: "Pending", value: "pending" },
@@ -195,8 +196,8 @@ const Tasks = () => {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button
-            onClick={() => console.log('Add task clicked - needs modal integration')}
+<Button
+            onClick={() => setIsQuickAddOpen(true)}
             variant="primary"
             className="flex items-center gap-2"
           >
@@ -350,7 +351,17 @@ const Tasks = () => {
             })}
           </div>
         </div>
-      )}
+)}
+      
+      <QuickAddModal
+        isOpen={isQuickAddOpen}
+        onClose={() => setIsQuickAddOpen(false)}
+        onSuccess={() => {
+          setIsQuickAddOpen(false);
+          loadData();
+        }}
+        type="task"
+      />
     </div>
   );
 };
