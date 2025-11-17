@@ -40,14 +40,31 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-1">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={cn(
+                  "flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                  isActive(item.href)
+                    ? "bg-primary text-white"
+                    : "text-gray-700 hover:bg-gray-100 hover:text-primary"
+                )}
+              >
+                <ApperIcon name={item.icon} className="w-4 h-4" />
+                <span>{item.name}</span>
+              </Link>
+            ))}
+          </nav>
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
             
             {/* Mobile menu button */}
-<button
+            <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100"
+              className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100"
             >
               <ApperIcon name={isMobileMenuOpen ? "X" : "Menu"} className="w-5 h-5" />
             </button>

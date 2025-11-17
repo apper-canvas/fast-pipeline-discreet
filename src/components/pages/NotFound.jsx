@@ -4,9 +4,9 @@ import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 
 const NotFound = () => {
-return (
+  return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-blue-50">
-      <div className="text-center space-y-4 px-4">
+      <div className="text-center space-y-6 px-4">
         <div className="w-24 h-24 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto">
           <ApperIcon name="Search" className="w-12 h-12 text-white" />
         </div>
