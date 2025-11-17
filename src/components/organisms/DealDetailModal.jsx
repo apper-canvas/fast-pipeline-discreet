@@ -259,16 +259,11 @@ const DealDetailModal = ({ isOpen, onClose, deal, onUpdate }) => {
                           <label className="block text-sm font-medium text-gray-700 mb-1">
                             Stage
                           </label>
-                          <Select
+<Select
                             value={formData.stage}
                             onChange={(e) => handleInputChange("stage", e.target.value)}
-                          >
-                            {stageOptions.map((option) => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
-                            ))}
-                          </Select>
+                            options={stageOptions}
+                          />
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">

@@ -310,10 +310,10 @@ const stageOptions = [
                 <label htmlFor="deal-stage" className="block text-sm font-medium text-gray-700 mb-2">
                   Stage
                 </label>
-                <Select
+<Select
                   id="deal-stage"
                   value={formData.stage}
-                  onChange={(value) => handleInputChange('stage', value)}
+                  onChange={(e) => handleInputChange('stage', e.target.value)}
                   options={stageOptions}
                   disabled={isSubmitting}
                   className="w-full"
@@ -324,10 +324,10 @@ const stageOptions = [
                 <label htmlFor="deal-contact" className="block text-sm font-medium text-gray-700 mb-2">
                   Contact *
                 </label>
-                <Select
+<Select
                   id="deal-contact"
                   value={formData.contactId}
-                  onChange={(value) => handleInputChange('contactId', value)}
+                  onChange={(e) => handleInputChange('contactId', e.target.value)}
                   options={contactOptions}
                   placeholder="Select a contact"
                   error={errors.contactId}
