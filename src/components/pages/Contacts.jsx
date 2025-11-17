@@ -8,6 +8,7 @@ import Loading from "@/components/ui/Loading";
 import ErrorView from "@/components/ui/ErrorView";
 import Empty from "@/components/ui/Empty";
 import ContactDetailModal from "@/components/organisms/ContactDetailModal";
+import QuickAddModal from "@/components/organisms/QuickAddModal";
 import ApperIcon from "@/components/ApperIcon";
 import { contactService } from "@/services/api/contactService";
 import { dealService } from "@/services/api/dealService";
@@ -23,8 +24,9 @@ const Contacts = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
-  const [selectedContact, setSelectedContact] = useState(null);
+const [selectedContact, setSelectedContact] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
 
 const [isExporting, setIsExporting] = useState(false);
 
@@ -41,8 +43,7 @@ const [isExporting, setIsExporting] = useState(false);
       setLoading(false);
     }
   };
-
-  const handleExportContacts = async () => {
+const handleExportContacts = async () => {
     try {
       setIsExporting(true);
       await contactService.exportToCSV(filteredContacts);
@@ -55,6 +56,9 @@ const [isExporting, setIsExporting] = useState(false);
     }
   };
 
+  const handleAddContact = () => {
+    setIsQuickAddOpen(true);
+  };
   useEffect(() => {
     loadContacts();
   }, []);
@@ -120,7 +124,15 @@ const [isExporting, setIsExporting] = useState(false);
         </div>
         
         {/* Export Button */}
-        <div className="flex items-center gap-3">
+<div className="flex items-center gap-3">
+          <Button
+            onClick={handleAddContact}
+            variant="primary"
+            size="sm"
+            icon="Plus"
+          >
+            Add Contact
+          </Button>
           <Button
             onClick={handleExportContacts}
             disabled={isExporting || filteredContacts.length === 0}
@@ -268,11 +280,16 @@ const [isExporting, setIsExporting] = useState(false);
       )}
 
       {/* Contact Detail Modal */}
-      <ContactDetailModal
+<ContactDetailModal
         isOpen={isDetailModalOpen}
         onClose={() => setIsDetailModalOpen(false)}
         contact={selectedContact}
         onUpdate={loadContacts}
+      />
+      <QuickAddModal
+        isOpen={isQuickAddOpen}
+        onClose={() => setIsQuickAddOpen(false)}
+        onSuccess={loadContacts}
       />
     </div>
   );
