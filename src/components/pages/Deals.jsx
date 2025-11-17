@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import SearchBar from "@/components/molecules/SearchBar";
-import FilterDropdown from "@/components/molecules/FilterDropdown";
-import Button from "@/components/atoms/Button";
-import Badge from "@/components/atoms/Badge";
-import Loading from "@/components/ui/Loading";
-import ErrorView from "@/components/ui/ErrorView";
-import Empty from "@/components/ui/Empty";
-import DealDetailModal from "@/components/organisms/DealDetailModal";
-import ApperIcon from "@/components/ApperIcon";
+import React, { useEffect, useState } from "react";
 import { dealService } from "@/services/api/dealService";
 import { contactService } from "@/services/api/contactService";
 import { csvExportService } from "@/services/csvExportService";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
+import SearchBar from "@/components/molecules/SearchBar";
+import FilterDropdown from "@/components/molecules/FilterDropdown";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import ErrorView from "@/components/ui/ErrorView";
+import DealDetailModal from "@/components/organisms/DealDetailModal";
+import Button from "@/components/atoms/Button";
+import Badge from "@/components/atoms/Badge";
 
 const Deals = () => {
   const [deals, setDeals] = useState([]);
@@ -22,9 +22,9 @@ const Deals = () => {
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStages, setSelectedStages] = useState([]);
-  const [selectedDeal, setSelectedDeal] = useState(null);
+const [selectedDeal, setSelectedDeal] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-
+  const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
   const stageOptions = [
     { label: "Lead", value: "lead" },
     { label: "Qualified", value: "qualified" },
@@ -157,7 +157,16 @@ const [isExporting, setIsExporting] = useState(false);
         </div>
         
         {/* Export Button */}
-        <div className="flex items-center gap-3">
+<div className="flex items-center gap-3">
+          <Button
+            onClick={() => setIsQuickAddOpen(true)}
+            variant="solid"
+            size="sm"
+            icon="Plus"
+            className="bg-primary hover:bg-primary/90 text-white"
+          >
+            Add Deal
+          </Button>
           <Button
             onClick={handleExportDeals}
             disabled={isExporting || filteredDeals.length === 0}
