@@ -66,7 +66,7 @@ const Layout = () => {
         />
       )}
       
-<main className={`p-3 sm:p-4 lg:p-6 transition-all duration-300 ${
+<main className={`p-2 sm:p-3 lg:p-4 transition-all duration-300 ${
         'lg:ml-64'
       }`}>
         <Outlet />
