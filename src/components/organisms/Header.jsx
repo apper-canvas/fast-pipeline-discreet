@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 
-const Header = ({ onQuickAdd }) => {
+const Header = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -60,14 +60,6 @@ const Header = ({ onQuickAdd }) => {
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
-            <Button
-              onClick={onQuickAdd}
-              size="sm"
-              icon="Plus"
-              className="hidden sm:flex"
-            >
-              Quick Add
-            </Button>
             
             {/* Mobile menu button */}
             <button
@@ -101,18 +93,7 @@ const Header = ({ onQuickAdd }) => {
               </Link>
             ))}
             <div className="pt-2">
-              <Button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onQuickAdd();
-                }}
-                size="sm"
-                icon="Plus"
-                className="w-full justify-center"
-              >
-                Quick Add
-              </Button>
-            </div>
+</div>
           </div>
         </div>
       )}
