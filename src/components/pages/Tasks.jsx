@@ -202,7 +202,7 @@ const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
             className="flex items-center gap-2"
           >
             <ApperIcon name="Plus" size={16} />
-            Add Task
+            Add Deal
           </Button>
         </div>
       </div>
@@ -353,14 +353,14 @@ const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
         </div>
 )}
       
-      <QuickAddModal
+<QuickAddModal
         isOpen={isQuickAddOpen}
         onClose={() => setIsQuickAddOpen(false)}
         onSuccess={() => {
           setIsQuickAddOpen(false);
           loadData();
         }}
-        type="task"
+        type="deal"
       />
     </div>
   );
