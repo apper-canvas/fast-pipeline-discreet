@@ -240,12 +240,12 @@ label: `${contact.name} - ${contact.company || 'No Company'}`
       onClose={handleClose} 
 title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'Task'}`}
     >
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 gap-6">
-          {type === 'contact' ? (
+<form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-4">
+{type === 'contact' ? (
             <>
-              <div>
-                <label htmlFor="contact-name" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="contact-name" className="block text-sm font-medium text-gray-900">
                   Name *
                 </label>
                 <Input
@@ -263,8 +263,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 )}
               </div>
               
-              <div>
-                <label htmlFor="contact-email" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="contact-email" className="block text-sm font-medium text-gray-900">
                   Email *
                 </label>
                 <Input
@@ -282,8 +282,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 )}
               </div>
               
-              <div>
-                <label htmlFor="contact-phone" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="contact-phone" className="block text-sm font-medium text-gray-900">
                   Phone
                 </label>
                 <Input
@@ -297,8 +297,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 />
               </div>
               
-              <div>
-                <label htmlFor="contact-company" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="contact-company" className="block text-sm font-medium text-gray-900">
                   Company
                 </label>
                 <Input
@@ -312,10 +312,10 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 />
               </div>
             </>
-) : type === 'deal' ? (
+          ) : type === 'deal' ? (
             <>
-              <div>
-                <label htmlFor="deal-title" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="deal-title" className="block text-sm font-medium text-gray-900">
                   Deal Title *
                 </label>
                 <Input
@@ -333,8 +333,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 )}
               </div>
               
-              <div>
-                <label htmlFor="deal-value" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="deal-value" className="block text-sm font-medium text-gray-900">
                   Deal Value *
                 </label>
                 <Input
@@ -354,8 +354,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 )}
               </div>
               
-              <div>
-                <label htmlFor="deal-stage" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="deal-stage" className="block text-sm font-medium text-gray-900">
                   Stage
                 </label>
                 <Select
@@ -368,8 +368,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 />
               </div>
               
-              <div>
-                <label htmlFor="deal-contact" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="deal-contact" className="block text-sm font-medium text-gray-900">
                   Contact *
                 </label>
                 <Select
@@ -389,8 +389,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
             </>
           ) : (
             <>
-              <div>
-                <label htmlFor="task-title" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="task-title" className="block text-sm font-medium text-gray-900">
                   Task Title *
                 </label>
                 <Input
@@ -408,8 +408,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 )}
               </div>
               
-              <div>
-                <label htmlFor="task-description" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="task-description" className="block text-sm font-medium text-gray-900">
                   Description
                 </label>
                 <Input
@@ -423,8 +423,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 />
               </div>
               
-              <div>
-                <label htmlFor="task-due-date" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="task-due-date" className="block text-sm font-medium text-gray-900">
                   Due Date
                 </label>
                 <Input
@@ -441,8 +441,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 )}
               </div>
               
-              <div>
-                <label htmlFor="task-priority" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="task-priority" className="block text-sm font-medium text-gray-900">
                   Priority
                 </label>
                 <Select
@@ -455,8 +455,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 />
               </div>
               
-              <div>
-                <label htmlFor="task-status" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="task-status" className="block text-sm font-medium text-gray-900">
                   Status
                 </label>
                 <Select
@@ -469,8 +469,8 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
                 />
               </div>
               
-              <div>
-                <label htmlFor="task-contact" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1.5">
+                <label htmlFor="task-contact" className="block text-sm font-medium text-gray-900">
                   Contact
                 </label>
                 <Select
@@ -486,24 +486,24 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
             </>
           )}
         </div>
-        
-        <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+<div className="flex justify-end space-x-3 pt-5 mt-6 border-t border-gray-100">
           <Button
             type="button"
             variant="ghost"
             onClick={handleClose}
             disabled={isSubmitting}
+            className="px-4 py-2"
           >
             Cancel
           </Button>
-<Button
+          <Button
             type="submit"
             variant="primary"
             disabled={isSubmitting}
             icon={isSubmitting ? "Loader2" : "Plus"}
-            className={isSubmitting ? "animate-spin" : ""}
+            className={`px-4 py-2 ${isSubmitting ? "animate-spin" : ""}`}
           >
-{isSubmitting ? 'Adding...' : `Add ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'Task'}`}
+            {isSubmitting ? 'Adding...' : `Add ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'Task'}`}
           </Button>
         </div>
       </form>
