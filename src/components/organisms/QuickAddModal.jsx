@@ -388,111 +388,115 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
               </div>
             </>
           ) : (
-            <>
-              <div className="space-y-1.5">
-                <label htmlFor="task-title" className="block text-sm font-medium text-gray-900">
-                  Task Title *
-                </label>
-                <Input
-                  id="task-title"
-                  type="text"
-                  placeholder="Enter task title"
-                  value={formData.title}
-                  onChange={(e) => handleInputChange('title', e.target.value)}
-                  error={errors.title}
-                  disabled={isSubmitting}
-                  className="w-full"
-                />
-                {errors.title && (
-                  <p className="mt-1 text-sm text-error">{errors.title}</p>
-                )}
-              </div>
-              
-              <div className="space-y-1.5">
-                <label htmlFor="task-description" className="block text-sm font-medium text-gray-900">
-                  Description
-                </label>
-                <Input
-                  id="task-description"
-                  type="text"
-                  placeholder="Enter task description"
-                  value={formData.description}
-                  onChange={(e) => handleInputChange('description', e.target.value)}
-                  disabled={isSubmitting}
-                  className="w-full"
-                />
-              </div>
-              
-              <div className="space-y-1.5">
-                <label htmlFor="task-due-date" className="block text-sm font-medium text-gray-900">
-                  Due Date
-                </label>
-                <Input
-                  id="task-due-date"
-                  type="date"
-                  value={formData.dueDate}
-                  onChange={(e) => handleInputChange('dueDate', e.target.value)}
-                  error={errors.dueDate}
-                  disabled={isSubmitting}
-                  className="w-full"
-                />
-                {errors.dueDate && (
-                  <p className="mt-1 text-sm text-error">{errors.dueDate}</p>
-                )}
-              </div>
-              
-              <div className="space-y-1.5">
-                <label htmlFor="task-priority" className="block text-sm font-medium text-gray-900">
-                  Priority
-                </label>
-                <Select
-                  id="task-priority"
-                  value={formData.priority}
-                  onChange={(e) => handleInputChange('priority', e.target.value)}
-                  options={priorityOptions}
-                  disabled={isSubmitting}
-                  className="w-full"
-                />
-              </div>
-              
-              <div className="space-y-1.5">
-                <label htmlFor="task-status" className="block text-sm font-medium text-gray-900">
-                  Status
-                </label>
-                <Select
-                  id="task-status"
-                  value={formData.status}
-                  onChange={(e) => handleInputChange('status', e.target.value)}
-                  options={statusOptions}
-                  disabled={isSubmitting}
-                  className="w-full"
-                />
-              </div>
-              
-              <div className="space-y-1.5">
-                <label htmlFor="task-contact" className="block text-sm font-medium text-gray-900">
-                  Contact
-                </label>
-                <Select
-                  id="task-contact"
-                  value={formData.contactId}
-                  onChange={(e) => handleInputChange('contactId', e.target.value)}
-                  options={contactOptions}
-                  placeholder="Select a contact (optional)"
-                  disabled={isSubmitting}
-                  className="w-full"
-                />
+<>
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="task-title" className="block text-sm font-semibold text-gray-900 mb-2">
+                    Task Title *
+                  </label>
+                  <Input
+                    id="task-title"
+                    type="text"
+                    placeholder="Enter task title"
+                    value={formData.title}
+                    onChange={(e) => handleInputChange('title', e.target.value)}
+                    error={errors.title}
+                    disabled={isSubmitting}
+                    className="w-full shadow-sm border-gray-200 focus:border-primary focus:ring-primary/20 rounded-lg transition-all duration-200"
+                  />
+                  {errors.title && (
+                    <p className="mt-1.5 text-sm text-error font-medium">{errors.title}</p>
+                  )}
+                </div>
+                
+                <div>
+                  <label htmlFor="task-description" className="block text-sm font-semibold text-gray-900 mb-2">
+                    Description
+                  </label>
+                  <Input
+                    id="task-description"
+                    type="text"
+                    placeholder="Enter task description"
+                    value={formData.description}
+                    onChange={(e) => handleInputChange('description', e.target.value)}
+                    disabled={isSubmitting}
+                    className="w-full shadow-sm border-gray-200 focus:border-primary focus:ring-primary/20 rounded-lg transition-all duration-200"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="task-due-date" className="block text-sm font-semibold text-gray-900 mb-2">
+                    Due Date
+                  </label>
+                  <Input
+                    id="task-due-date"
+                    type="date"
+                    value={formData.dueDate}
+                    onChange={(e) => handleInputChange('dueDate', e.target.value)}
+                    error={errors.dueDate}
+                    disabled={isSubmitting}
+                    className="w-full shadow-sm border-gray-200 focus:border-primary focus:ring-primary/20 rounded-lg transition-all duration-200"
+                  />
+                  {errors.dueDate && (
+                    <p className="mt-1.5 text-sm text-error font-medium">{errors.dueDate}</p>
+                  )}
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="task-priority" className="block text-sm font-semibold text-gray-900 mb-2">
+                      Priority
+                    </label>
+                    <Select
+                      id="task-priority"
+                      value={formData.priority}
+                      onChange={(e) => handleInputChange('priority', e.target.value)}
+                      options={priorityOptions}
+                      disabled={isSubmitting}
+                      className="w-full shadow-sm border-gray-200 focus:border-primary focus:ring-primary/20 rounded-lg transition-all duration-200"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="task-status" className="block text-sm font-semibold text-gray-900 mb-2">
+                      Status
+                    </label>
+                    <Select
+                      id="task-status"
+                      value={formData.status}
+                      onChange={(e) => handleInputChange('status', e.target.value)}
+                      options={statusOptions}
+                      disabled={isSubmitting}
+                      className="w-full shadow-sm border-gray-200 focus:border-primary focus:ring-primary/20 rounded-lg transition-all duration-200"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label htmlFor="task-contact" className="block text-sm font-semibold text-gray-900 mb-2">
+                    Contact
+                  </label>
+                  <Select
+                    id="task-contact"
+                    value={formData.contactId}
+                    onChange={(e) => handleInputChange('contactId', e.target.value)}
+                    options={contactOptions}
+                    placeholder="Select a contact (optional)"
+                    disabled={isSubmitting}
+                    className="w-full shadow-sm border-gray-200 focus:border-primary focus:ring-primary/20 rounded-lg transition-all duration-200"
+                  />
+                </div>
               </div>
             </>
           )}
         </div>
-<div className="flex justify-end space-x-3 pt-5 mt-6 border-t border-gray-100">
+<div className="flex justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
           <Button
             type="button"
             variant="ghost"
             onClick={handleClose}
             disabled={isSubmitting}
-            className="px-4 py-2"
+            className="px-6 py-2.5 font-medium transition-all duration-200 hover:bg-gray-50 rounded-lg"
           >
             Cancel
           </Button>
@@ -501,7 +505,7 @@ title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'T
             variant="primary"
             disabled={isSubmitting}
             icon={isSubmitting ? "Loader2" : "Plus"}
-            className={`px-4 py-2 ${isSubmitting ? "animate-spin" : ""}`}
+            className={`px-6 py-2.5 font-medium shadow-sm transition-all duration-200 rounded-lg ${isSubmitting ? "animate-spin" : ""}`}
           >
             {isSubmitting ? 'Adding...' : `Add ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'Task'}`}
           </Button>
