@@ -217,9 +217,9 @@ const stageOptions = [
     { value: 'closed-won', label: 'Closed Won' }
   ];
 
-  const contactOptions = contacts.map(contact => ({
+const contactOptions = contacts.map(contact => ({
     value: contact.Id.toString(),
-label: `${contact.name} - ${contact.company || 'No Company'}`
+    label: `${contact.firstName} ${contact.lastName} - ${contact.company || 'No Company'}`
   }));
 
   const priorityOptions = [
