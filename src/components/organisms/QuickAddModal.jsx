@@ -6,9 +6,10 @@ import Input from '@/components/atoms/Input';
 import Select from '@/components/atoms/Select';
 import { contactService } from '@/services/api/contactService';
 import { dealService } from '@/services/api/dealService';
+import { taskService } from '@/services/api/taskService';
 
 const QuickAddModal = ({ isOpen, onClose, onSuccess, type = 'contact' }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     // Contact fields
     name: '',
     email: '',
@@ -18,14 +19,19 @@ const QuickAddModal = ({ isOpen, onClose, onSuccess, type = 'contact' }) => {
     title: '',
     value: '',
     stage: 'prospect',
-    contactId: ''
+    contactId: '',
+    // Task fields
+    description: '',
+    dueDate: '',
+    priority: 'medium',
+    status: 'not-started'
   });
 const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const [contacts, setContacts] = useState([]);
 
-  useEffect(() => {
-    if (type === 'deal' && isOpen) {
+useEffect(() => {
+    if ((type === 'deal' || type === 'task') && isOpen) {
       loadContacts();
     }
   }, [type, isOpen]);
@@ -78,7 +84,15 @@ const validateForm = () => {
       }
       
       if (!formData.contactId) {
-        newErrors.contactId = 'Please select a contact';
+newErrors.contactId = 'Please select a contact';
+      }
+    } else if (type === 'task') {
+      if (!formData.title.trim()) {
+        newErrors.title = 'Task title is required';
+      }
+      
+      if (formData.dueDate && new Date(formData.dueDate) < new Date()) {
+        newErrors.dueDate = 'Due date cannot be in the past';
       }
     }
     
@@ -125,12 +139,26 @@ const handleSubmit = async (e) => {
           updatedAt: new Date().toISOString()
         };
         
-        await dealService.create(dealData);
+await dealService.create(dealData);
         toast.success('Deal added successfully!');
+      } else if (type === 'task') {
+        const taskData = {
+          title: formData.title,
+          description: formData.description,
+          dueDate: formData.dueDate ? new Date(formData.dueDate).toISOString() : null,
+          priority: formData.priority,
+          status: formData.status,
+          contactId: formData.contactId ? Number(formData.contactId) : null,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+        
+        await taskService.create(taskData);
+        toast.success('Task added successfully!');
       }
       
       // Reset form
-      setFormData({
+setFormData({
         name: '',
         email: '',
         phone: '',
@@ -138,7 +166,11 @@ const handleSubmit = async (e) => {
         title: '',
         value: '',
         stage: 'prospect',
-        contactId: ''
+        contactId: '',
+        description: '',
+        dueDate: '',
+        priority: 'medium',
+        status: 'not-started'
       });
       setErrors({});
       
@@ -158,7 +190,7 @@ const handleSubmit = async (e) => {
 
 const handleClose = () => {
     if (!isSubmitting) {
-      setFormData({
+setFormData({
         name: '',
         email: '',
         phone: '',
@@ -166,7 +198,11 @@ const handleClose = () => {
         title: '',
         value: '',
         stage: 'prospect',
-        contactId: ''
+        contactId: '',
+        description: '',
+        dueDate: '',
+        priority: 'medium',
+        status: 'not-started'
       });
       setErrors({});
       onClose();
@@ -183,14 +219,26 @@ const stageOptions = [
 
   const contactOptions = contacts.map(contact => ({
     value: contact.Id.toString(),
-    label: `${contact.name} - ${contact.company || 'No Company'}`
+label: `${contact.name} - ${contact.company || 'No Company'}`
   }));
+
+  const priorityOptions = [
+    { value: 'low', label: 'Low' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'high', label: 'High' }
+  ];
+
+  const statusOptions = [
+    { value: 'not-started', label: 'Not Started' },
+    { value: 'in-progress', label: 'In Progress' },
+    { value: 'completed', label: 'Completed' }
+  ];
 
   return (
     <Modal 
       isOpen={isOpen} 
       onClose={handleClose} 
-      title={`Add New ${type === 'contact' ? 'Contact' : 'Deal'}`}
+title={`Add New ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'Task'}`}
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 gap-6">
@@ -264,7 +312,7 @@ const stageOptions = [
                 />
               </div>
             </>
-          ) : (
+) : type === 'deal' ? (
             <>
               <div>
                 <label htmlFor="deal-title" className="block text-sm font-medium text-gray-700 mb-2">
@@ -310,7 +358,7 @@ const stageOptions = [
                 <label htmlFor="deal-stage" className="block text-sm font-medium text-gray-700 mb-2">
                   Stage
                 </label>
-<Select
+                <Select
                   id="deal-stage"
                   value={formData.stage}
                   onChange={(e) => handleInputChange('stage', e.target.value)}
@@ -324,7 +372,7 @@ const stageOptions = [
                 <label htmlFor="deal-contact" className="block text-sm font-medium text-gray-700 mb-2">
                   Contact *
                 </label>
-<Select
+                <Select
                   id="deal-contact"
                   value={formData.contactId}
                   onChange={(e) => handleInputChange('contactId', e.target.value)}
@@ -337,6 +385,103 @@ const stageOptions = [
                 {errors.contactId && (
                   <p className="mt-1 text-sm text-error">{errors.contactId}</p>
                 )}
+              </div>
+            </>
+          ) : (
+            <>
+              <div>
+                <label htmlFor="task-title" className="block text-sm font-medium text-gray-700 mb-2">
+                  Task Title *
+                </label>
+                <Input
+                  id="task-title"
+                  type="text"
+                  placeholder="Enter task title"
+                  value={formData.title}
+                  onChange={(e) => handleInputChange('title', e.target.value)}
+                  error={errors.title}
+                  disabled={isSubmitting}
+                  className="w-full"
+                />
+                {errors.title && (
+                  <p className="mt-1 text-sm text-error">{errors.title}</p>
+                )}
+              </div>
+              
+              <div>
+                <label htmlFor="task-description" className="block text-sm font-medium text-gray-700 mb-2">
+                  Description
+                </label>
+                <Input
+                  id="task-description"
+                  type="text"
+                  placeholder="Enter task description"
+                  value={formData.description}
+                  onChange={(e) => handleInputChange('description', e.target.value)}
+                  disabled={isSubmitting}
+                  className="w-full"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="task-due-date" className="block text-sm font-medium text-gray-700 mb-2">
+                  Due Date
+                </label>
+                <Input
+                  id="task-due-date"
+                  type="date"
+                  value={formData.dueDate}
+                  onChange={(e) => handleInputChange('dueDate', e.target.value)}
+                  error={errors.dueDate}
+                  disabled={isSubmitting}
+                  className="w-full"
+                />
+                {errors.dueDate && (
+                  <p className="mt-1 text-sm text-error">{errors.dueDate}</p>
+                )}
+              </div>
+              
+              <div>
+                <label htmlFor="task-priority" className="block text-sm font-medium text-gray-700 mb-2">
+                  Priority
+                </label>
+                <Select
+                  id="task-priority"
+                  value={formData.priority}
+                  onChange={(e) => handleInputChange('priority', e.target.value)}
+                  options={priorityOptions}
+                  disabled={isSubmitting}
+                  className="w-full"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="task-status" className="block text-sm font-medium text-gray-700 mb-2">
+                  Status
+                </label>
+                <Select
+                  id="task-status"
+                  value={formData.status}
+                  onChange={(e) => handleInputChange('status', e.target.value)}
+                  options={statusOptions}
+                  disabled={isSubmitting}
+                  className="w-full"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="task-contact" className="block text-sm font-medium text-gray-700 mb-2">
+                  Contact
+                </label>
+                <Select
+                  id="task-contact"
+                  value={formData.contactId}
+                  onChange={(e) => handleInputChange('contactId', e.target.value)}
+                  options={contactOptions}
+                  placeholder="Select a contact (optional)"
+                  disabled={isSubmitting}
+                  className="w-full"
+                />
               </div>
             </>
           )}
@@ -358,7 +503,7 @@ const stageOptions = [
             icon={isSubmitting ? "Loader2" : "Plus"}
             className={isSubmitting ? "animate-spin" : ""}
           >
-            {isSubmitting ? 'Adding...' : `Add ${type === 'contact' ? 'Contact' : 'Deal'}`}
+{isSubmitting ? 'Adding...' : `Add ${type === 'contact' ? 'Contact' : type === 'deal' ? 'Deal' : 'Task'}`}
           </Button>
         </div>
       </form>
