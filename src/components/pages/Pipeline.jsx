@@ -242,12 +242,12 @@ const [selectedDeal, setSelectedDeal] = useState(null);
         onUpdate={loadData}
       />
 
-      {/* Quick Add Modal */}
+{/* Quick Add Modal */}
       <QuickAddModal
         isOpen={isQuickAddModalOpen}
         onClose={() => setIsQuickAddModalOpen(false)}
-        onUpdate={loadData}
-        defaultType="deal"
+        onSuccess={loadData}
+        type="deal"
       />
     </div>
   );
