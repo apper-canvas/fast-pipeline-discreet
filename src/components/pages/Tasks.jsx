@@ -197,12 +197,12 @@ const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
         </div>
         <div className="flex gap-2">
 <Button
-            onClick={() => setIsQuickAddOpen(true)}
+onClick={() => setIsQuickAddOpen(true)}
             variant="primary"
             className="flex items-center gap-2"
           >
             <ApperIcon name="Plus" size={16} />
-            Add Deal
+            Add Task
           </Button>
         </div>
       </div>
@@ -360,7 +360,7 @@ const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
           setIsQuickAddOpen(false);
           loadData();
         }}
-        type="deal"
+        type="task"
       />
     </div>
   );
