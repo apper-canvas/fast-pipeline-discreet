@@ -36,12 +36,12 @@ const FilterDropdown = ({
     }
   };
 
-  const getDisplayValue = () => {
+const getDisplayValue = () => {
     if (multiple) {
       return value.length > 0 ? `${value.length} selected` : label;
     }
-    const selectedOption = options.find(opt => opt.value === value);
-    return selectedOption ? selectedOption.label : label;
+    const selectedOption = options.find(opt => opt && opt.value === value);
+    return selectedOption && selectedOption.label ? selectedOption.label : label;
   };
 
   return (
